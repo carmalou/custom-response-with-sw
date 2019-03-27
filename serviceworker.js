@@ -27,6 +27,8 @@ self.onfetch = function(event) {
             if(cachedFiles) {
                 return cachedFiles;
             } else {
+                // I do a check here to make sure nothing from the app itself is being requested.
+                // if something from the app were being requested -- like say the index.html page -- this would be returned instead and we don't want that.
                 if(!event.request.url.includes(location.origin)) {
                     var init = { "status" : 200 , "statusText" : "I am a custom service worker response!" };
                     return new Response(null, init);
