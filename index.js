@@ -1,17 +1,19 @@
 function fetchFayePI() {
     return window.fetch('https://fayepi.herokuapp.com/romcoms')
     .then(function(response) {
-        return response.json()
+        // return response.json()
+        document.getElementById('contents').appendChild(document.createTextNode(response.statusText));
+        return;
     })
-    .then(function(actualRez) {
-        var ul = document.createElement('ol');
-        for(var i = 0; i < actualRez.length; i++) {
-            var tmp = generateList(actualRez[i]);
-            ul.appendChild(tmp);
-        }
+    // .then(function(actualRez) {
+    //     var ul = document.createElement('ol');
+    //     for(var i = 0; i < actualRez.length; i++) {
+    //         var tmp = generateList(actualRez[i]);
+    //         ul.appendChild(tmp);
+    //     }
 
-        document.getElementById('contents').appendChild(ul);
-    })
+    //     document.getElementById('contents').appendChild(ul);
+    // })
     .catch(function(err) {
         console.log('err! ', err);
     });

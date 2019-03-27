@@ -21,17 +21,25 @@ self.onactivate = function(event) {
 self.onfetch = function(event) {
     console.log('event ', event);
 
-    if(event.request.method == 'GET') {
-        return this.fetch(event.request.url)
-        .then(function(response) {
-            console.log(response);
-            return response.json()
-        })
-        .then(function(jsonRez) {
-            console.log(jsonRez);
-        })
-        .catch(function(err) {
-            console.log('err! ', err);
-        });
-    }
+    // event.respondWith(test());
+
+    // function test() {
+    //     if(event.request.method == 'GET') {
+    //         fetch(event.request.url)
+    //         .then(function(response) {
+    //             console.log(response);
+    //             return response.json()
+    //         })
+    //         .then(function(jsonRez) {
+    //             console.log(jsonRez);
+    //             var init = { "status" : 200 , "statusText" : "sucks to be you!" };
+    //             var myResponse = new Response(null,init);
+                
+    //             event.respondWith(myResponse);
+    //         })
+    //         .catch(function(err) {
+    //             console.log('err! ', err);
+    //         });
+    //     }
+    // }
 }
