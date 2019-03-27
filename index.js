@@ -4,7 +4,6 @@ function fetchFayePI() {
         return response.json()
     })
     .then(function(actualRez) {
-        console.log('actualRez ', actualRez);
         var ul = document.createElement('ol');
         for(var i = 0; i < actualRez.length; i++) {
             var tmp = generateList(actualRez[i]);
@@ -25,3 +24,10 @@ function generateList(movie) {
 }
 
 fetchFayePI();
+
+if(navigator.serviceWorker) {
+    navigator.serviceWorker.register('./serviceworker.js')
+    .catch(function(err) {
+        console.log('err ', err);
+    });
+}

@@ -20,4 +20,18 @@ self.onactivate = function(event) {
 
 self.onfetch = function(event) {
     console.log('event ', event);
+
+    if(event.request.method == 'GET') {
+        return this.fetch(event.request.url)
+        .then(function(response) {
+            console.log(response);
+            return response.json()
+        })
+        .then(function(jsonRez) {
+            console.log(jsonRez);
+        })
+        .catch(function(err) {
+            console.log('err! ', err);
+        });
+    }
 }
