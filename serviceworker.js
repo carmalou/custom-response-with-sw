@@ -21,9 +21,17 @@ self.onactivate = function(event) {
 self.onfetch = function(event) {
     console.log('event ', event);
 
-    if(!event.request.url.includes(location.origin)) {
-        var init = { "status" : 200 , "statusText" : "sucks to be you!" };
-        var myResponse = new Response(null,init);
-        event.respondWith(myResponse);
-    }
+    event.respondWith(
+        caches.match(event.request)
+        .then(function(cachedFiles) {
+            if(cachedFiles) {
+                return cachedFiles;
+            } else {
+                if(!event.request.url.includes(location.origin)) {
+                    var init = { "status" : 200 , "statusText" : "I am a custom service worker response!" };
+                    return new Response(null, init);
+                }
+            }
+        })
+    )
 }
