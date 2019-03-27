@@ -19,8 +19,6 @@ self.onactivate = function(event) {
 }
 
 self.onfetch = function(event) {
-    console.log('event ', event);
-
     event.respondWith(
         caches.match(event.request)
         .then(function(cachedFiles) {

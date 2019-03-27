@@ -1,7 +1,5 @@
 # This project demonstrates returning a custom response from a service worker
 
-# [Read the blog post](link)
-
 # To run this project:
 
 1. Fork and clone the repo
