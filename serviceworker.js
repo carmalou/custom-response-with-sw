@@ -19,27 +19,19 @@ self.onactivate = function(event) {
 }
 
 self.onfetch = function(event) {
-    console.log('event ', event);
-
-    // event.respondWith(test());
-
-    // function test() {
-    //     if(event.request.method == 'GET') {
-    //         fetch(event.request.url)
-    //         .then(function(response) {
-    //             console.log(response);
-    //             return response.json()
-    //         })
-    //         .then(function(jsonRez) {
-    //             console.log(jsonRez);
-    //             var init = { "status" : 200 , "statusText" : "sucks to be you!" };
-    //             var myResponse = new Response(null,init);
-                
-    //             event.respondWith(myResponse);
-    //         })
-    //         .catch(function(err) {
-    //             console.log('err! ', err);
-    //         });
-    //     }
-    // }
+    event.respondWith(
+        caches.match(event.request)
+        .then(function(cachedFiles) {
+            if(cachedFiles) {
+                return cachedFiles;
+            } else {
+                // I do a check here to make sure nothing from the app itself is being requested.
+                // if something from the app were being requested -- like say the index.html page -- this would be returned instead and we don't want that.
+                if(!event.request.url.includes(location.origin)) {
+                    var init = { "status" : 200 , "statusText" : "I am a custom service worker response!" };
+                    return new Response(null, init);
+                }
+            }
+        })
+    )
 }
