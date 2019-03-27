@@ -21,7 +21,11 @@ self.onactivate = function(event) {
 self.onfetch = function(event) {
     console.log('event ', event);
 
-    // event.respondWith(test());
+    if(!event.request.url.includes(location.origin)) {
+        var init = { "status" : 200 , "statusText" : "sucks to be you!" };
+        var myResponse = new Response(null,init);
+        event.respondWith(myResponse);
+    }
 
     // function test() {
     //     if(event.request.method == 'GET') {
