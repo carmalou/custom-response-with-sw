@@ -1,6 +1,7 @@
 function fetchFayePI() {
     return window.fetch('https://fayepi.herokuapp.com/romcoms')
     .then(function(response) {
+        console.log('index line4: ', response);
         document.getElementById('contents').appendChild(document.createTextNode(response.statusText));
         return;
     })

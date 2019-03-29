@@ -34,31 +34,33 @@ self.onfetch = function(event) {
             if(cachedFiles) {
                 return cachedFiles;
             } else {
-                fetch(event.request)
-                .then(function(response) {
-                    caches.open('cache-response1')
-                    .then(function(cache) {
-                        var clone = response.clone();
-                        return cache.add(clone);
-                    })
-                    .then(function() {
-                        return response;
-                    })
-                    .catch(function(err) {
-                        console.log('err! ', err);
-                    })
+                return fetch(event.request)
+                .then(async function(response) {
+                    var cache = await caches.open('cache-response1');
+
+                    // not sure why `put` worked over `add` and `addAll`, need to research this more
+                    await cache.put(event.request, response.clone());
+                    return response;
                 })
-
-
-                // var returnRez = newRez.clone();
-
-                // var cache = await caches.open('cache-response1');
-
-                // console.log(cache);
-                // // await cache.add(newRez);
-
-                // return returnRez;
+                .catch(function(err) {
+                    console.log('err line 54! ', err);
+                })
             }
         })
     )
 }
+
+// this didn't work
+// await cache.add(cloneToCache);
+
+// this also didn't work
+// await cache.addAll(cloneToCache);
+
+// this actually worked
+// return cache.put(event.request, cloneToCache)
+// .then(function() {
+//     console.log('success');
+// })
+// .catch(function(err) {
+//     console.log('wtf ', err);
+// })
